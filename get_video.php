@@ -15,12 +15,12 @@ curl_setopt_array($ch, [
 
 $content = curl_exec($ch);
 if ($content === FALSE) {
-    die("loading error");
+    die("threads loading error");
 }
 
 $content = json_decode($content);
 if ($content === NULL) {
-    die("json decoding error");
+    die("threads json decoding error");
 }
 
 $threads = [];
@@ -30,32 +30,33 @@ foreach ($content->threads as $thread) {
         $threads[] = $thread->posts[0]->num;
     }
 }
-
-$random_thread = $threads[array_rand($threads)];
-curl_setopt($ch, CURLOPT_URL, sprintf($config["url_thread"], $random_thread));
-
-$content = curl_exec($ch);
-if ($content === FALSE) {
-    die("loading error");
-}
-
-$content = json_decode($content);
-if ($content === NULL) {
-    die("json decoding error");
-}
+shuffle($threads);
 
 $videos = [];
-foreach ($content->threads[0]->posts as $post) {
-    foreach ($post->files as $file) {
-        if (endsWith($file->name, ".webm")) {
-            $videos[] = $file->name;
+foreach ($threads as $thread) {
+    curl_setopt($ch, CURLOPT_URL, sprintf($config["url_thread"], $thread));
+    
+    $content = curl_exec($ch);
+    if ($content === FALSE) {
+        die("posts loading error");
+    }
+
+    $content = json_decode($content);
+    if ($content === NULL) {
+        die("posts json decoding error");
+    }
+
+    foreach ($content->threads[0]->posts as $post) {
+        foreach ($post->files as $file) {
+            if (endsWith($file->name, ".webm")) {
+                $videos[] = sprintf($config["url_video"], $thread, $file->name);
+            }
         }
     }
 }
 
-$random_video = $videos[array_rand($videos)];
-
-echo sprintf($config["url_video"], $random_thread, $random_video);
+shuffle($videos);
+echo json_encode($videos, JSON_UNESCAPED_SLASHES);
 
 curl_close($ch);
 ?>

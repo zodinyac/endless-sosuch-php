@@ -1,3 +1,5 @@
+var videos = [];
+
 $( document ).ready(function() {
     $("#loadnewvideo").on("click", function() {
         loadVideo();
@@ -79,19 +81,33 @@ function toggleFullscreen() {
     }
 }
 
-function loadVideo()
+function getVideoList()
 {
     $.get( "get_video.php", function(data) {
-        if (data.startsWith("https")) {
-            $("#video > source").attr("src", data);
-            $("#video")[0].load();
-            
-            $("#pause").removeClass("fa-play");
-            $("#pause").addClass("fa-pause");
-        } else {
+        var answer = JSON.parse(data);
+        if ($.isArray(answer) && answer.length > 0) {
+            videos = answer;
             loadVideo();
+        } else {
+           getVideoList();
         }
     });
+}
+
+function loadVideo()
+{
+    if (videos.length > 0) {
+        var url = videos.shift();
+        console.log("Now (" + new Date().format("HH:MM:ss dd/mm/yyyy") + ") playing: " + url);
+        
+        $("#video > source").attr("src", url);
+        $("#video")[0].load();
+        
+        $("#pause").removeClass("fa-play");
+        $("#pause").addClass("fa-pause");
+    } else {
+        getVideoList();
+    }
 }
 
 function playPause()
