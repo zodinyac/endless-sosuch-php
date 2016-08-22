@@ -106,11 +106,13 @@ video {
   padding: 15px;
   top: 10px;
   left: 8px;
+  z-index: 1;
 }
 
 #closemenubutton {
   color: black;
   text-shadow: inherit;
+  z-index: 1;
 }
 
 #site-menu {
@@ -126,6 +128,7 @@ video {
   box-shadow: 0px 0px 15px rgba(0,0,0,0.8);
   padding: 5px 15px 15px 10px;
   overflow: auto;
+  z-index: 1;
 }
 
 #title, #source, #song, #subs {
