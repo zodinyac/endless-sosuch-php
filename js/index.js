@@ -50,10 +50,27 @@ $( document ).ready(function() {
             case 70: // F
                 toggleFullscreen();
                 break;
+            case 38: // Up
+                changeVolume(0.05);
+                break;
+            case 40: // Down
+                changeVolume(-0.05);
+                break;
             default:
                 return;
         }
         e.preventDefault();
+    });
+    
+    var wheelEvent = isEventSupported("wheel") ? "wheel" : "mousewheel";
+    $(document).on(wheelEvent, function(e) {
+        var oEvent = e.originalEvent;
+        var delta  = oEvent.deltaY || oEvent.wheelDelta;
+        if (delta > 0) { // Scrolled down
+            changeVolume(-0.05);
+        } else if (delta < 0) { // Scrolled up
+            changeVolume(0.05);
+        }
     });
     
     $("#menubutton").hover(tooltip);
@@ -64,10 +81,27 @@ $( document ).ready(function() {
     loadVideo();
 });
 
-function isFullscreen() {
+function isEventSupported(eventName)
+{
+    var el = document.createElement("div");
+    eventName = "on" + eventName;
+    var isSupported = (eventName in el);
+
+    if (!isSupported) {
+        el.setAttribute(eventName, "return;");
+        isSupported = typeof el[eventName] === "function";
+    }
+
+    return isSupported;
+}
+
+function isFullscreen()
+{
     return Boolean(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
 }
-function toggleFullscreen() {
+
+function toggleFullscreen()
+{
     if (isFullscreen()) {
         if (document.exitFullscreen) {
             document.exitFullscreen();
@@ -139,6 +173,35 @@ function playPause()
     
     tooltip();
     tooltip("pause");
+}
+
+function changeVolume(amount)
+{
+    var video = $("#video")[0];
+    if (video.volume > 0 && amount < 0) {
+        video.volume = (video.volume + amount).toPrecision(2);
+    } else if (video.volume < 1 && amount > 0) {
+        video.volume = (video.volume + amount).toPrecision(2);
+    }
+
+    var percent = (video.volume * 100);
+    if (video.volume < 0.1) {
+        percent = percent.toPrecision(1);
+    } else if (video.volume == 1) {
+        percent = percent.toPrecision(3);
+    } else {
+        percent = percent.toPrecision(2);
+    }
+
+    displayTopRight(percent + "%");
+}
+
+function displayTopRight(text,delay)
+{
+    $(".displayTopRight").stop(true, true);
+    $(".displayTopRight").text(text);
+    $(".displayTopRight").show();
+    $(".displayTopRight").delay(delay ? delay : 0).fadeOut(1000);
 }
 
 function tooltip(text, css)
