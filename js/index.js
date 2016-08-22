@@ -44,11 +44,22 @@ $( document ).ready(function() {
             case 32: // Space
                 playPause();
                 break;
+            case 78: // N
+                loadVideo();
+                break;
+            case 70: // F
+                toggleFullscreen();
+                break;
             default:
                 return;
         }
         e.preventDefault();
     });
+    
+    $("#menubutton").hover(tooltip);
+    $(".controlsleft").children().hover(tooltip);
+    $(".controlscenter").children().hover(tooltip);
+    $(".controlsright").children().hover(tooltip);
     
     loadVideo();
 });
@@ -79,6 +90,9 @@ function toggleFullscreen() {
             e.msRequestFullscreen();
         }
     }
+    
+    tooltip();
+    tooltip("fullscreen");
 }
 
 function getVideoList()
@@ -122,4 +136,50 @@ function playPause()
     }
 
     $("#pause").toggleClass("fa-play").toggleClass("fa-pause");
+    
+    tooltip();
+    tooltip("pause");
+}
+
+function tooltip(text, css)
+{
+    var eventType;
+    if (text && text.target) {
+        eventType = text.type;
+        text = text.target.id;
+    }
+
+    switch (text) {
+        case "loadnewvideo":
+            text = "Click to get a new video (N)";
+            css = "left";
+            break;
+        case "pause":
+            if ($("#video")[0].paused) {
+                text = "Click to play the video (spacebar)";
+            } else {
+                text = "Click to pause the video (spacebar)";
+            }
+            css = "center";
+            break;
+        case "fullscreen":
+            if (isFullscreen()) {
+                text = "Click to exit fullscreen (F)";
+            } else {
+                text = "Click to enter fullscreen (F)";
+            }
+            css = "right";
+            break;
+    }
+    
+    $("#tooltip").removeAttr("style");
+    if (css == "left" || css == "right") {
+        $("#tooltip").attr("style", css + ": 10px;");
+    } else if (css == "center") {
+        $("#tooltip").attr("style", "right: 50%; transform: translateX(50%);");        
+    }
+    $("#tooltip").html(text);
+    
+    $("#tooltip").toggleClass("is-hidden", eventType && eventType === "mouseleave");
+    $("#tooltip").toggleClass("is-visible", eventType && eventType === "mouseenter");
 }

@@ -28,6 +28,7 @@ $file_url = $current_url . "get_video.php";
         <source type="video/webm" src="media/filler.webm" />
         Your browser does not support the video tag.
     </video>
+    <div id="tooltip" class="is-hidden"></div>
     <div class="controlsleft">
         <span id="loadnewvideo" class="quadbutton fa fa-refresh"></span>
     </div>

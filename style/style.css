@@ -88,6 +88,29 @@ video {
   margin-right: 1.719px;
 }
 
+.is-hidden {
+  visibility: hidden;
+}
+
+.is-visible {
+  opacity: 1;
+  animation: appear 85ms;
+  -webkit-animation: appear 85ms;
+}
+
+#tooltip {
+  position: fixed;
+  color: #555;
+  padding: 5px;
+  border-radius: 5px;
+  bottom: 55px;
+  background-color: white;
+  box-shadow: 0px 0px 3px #111;
+  transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
+  max-width: 30%;
+  font-size: 14pt;
+}
+
 .progressbar {
   position: fixed;
   top: 0px;
