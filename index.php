@@ -25,7 +25,7 @@ $file_url = $current_url . "get_video.php";
         </div>
     </div>
     <video id="video" width="100%" height="100%" autoplay <!--controls--> preload>
-        <source type="video/webm" src="" />
+        <source type="video/webm" src="media/filler.webm" />
         Your browser does not support the video tag.
     </video>
     <div class="controlsleft">

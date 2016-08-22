@@ -89,7 +89,8 @@ function getVideoList()
             videos = answer;
             loadVideo();
         } else {
-           getVideoList();
+            //alert(data);
+            getVideoList();
         }
     });
 }

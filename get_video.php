@@ -32,6 +32,10 @@ foreach ($content->threads as $thread) {
 }
 shuffle($threads);
 
+if (count($threads) === 0) {
+    die("threads not found");
+}
+
 $videos = [];
 foreach ($threads as $thread) {
     curl_setopt($ch, CURLOPT_URL, sprintf($config["url_thread"], $thread));
@@ -54,8 +58,8 @@ foreach ($threads as $thread) {
         }
     }
 }
-
 shuffle($videos);
+
 echo json_encode($videos, JSON_UNESCAPED_SLASHES);
 
 curl_close($ch);
