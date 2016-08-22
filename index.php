@@ -1,11 +1,3 @@
-<?php
-$current_url  = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
-$current_url .= $_SERVER['SERVER_NAME'];
-$current_url .= $_SERVER['DOCUMENT_URI'];
-$current_url = dirname($current_url) . "/";
-$file_url = $current_url . "get_video.php";
-?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -26,7 +18,7 @@ $file_url = $current_url . "get_video.php";
     </div>
     <video id="video" width="100%" height="100%" autoplay <!--controls--> preload>
         <source type="video/webm" src="media/filler.webm" />
-        Your browser does not support the video tag.
+        Your web browser does not support WebM video.
     </video>
     <div class="displayTopRight"></div>
     <div id="tooltip" class="is-hidden"></div>
