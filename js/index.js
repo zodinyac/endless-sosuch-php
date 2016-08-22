@@ -18,7 +18,7 @@ $( document ).ready(function() {
         var percentage = e.pageX / $(document).width();
         video.currentTime += video.duration * percentage - video.currentTime;
     });
-    
+
     $("#video").on("progress", function() {
         var video = $("#video")[0];
         var buffered = ((video.buffered && video.buffered.length) ? 100 * (video.buffered.end(0) / video.duration) : (video.readyState == 4 ? 100 : 0));
@@ -50,6 +50,9 @@ $( document ).ready(function() {
             case 70: // F
                 toggleFullscreen();
                 break;
+            case 77: // M
+                toggleMenu();
+                break;
             case 38: // Up
                 changeVolume(0.05);
                 break;
@@ -74,6 +77,7 @@ $( document ).ready(function() {
     });
     
     $("#menubutton").hover(tooltip);
+   
     $(".controlsleft").children().hover(tooltip);
     $(".controlscenter").children().hover(tooltip);
     $(".controlsright").children().hover(tooltip);
@@ -149,6 +153,8 @@ function loadVideo()
         var url = videos.shift();
         console.log("Now (" + new Date().format("HH:MM:ss dd/mm/yyyy") + ") playing: " + url);
         
+        $("#videolink").attr("href", url);
+        
         $("#video > source").attr("src", url);
         $("#video")[0].load();
         
@@ -204,6 +210,30 @@ function displayTopRight(text,delay)
     $(".displayTopRight").delay(delay ? delay : 0).fadeOut(1000);
 }
 
+function menuIsHidden()
+{
+    return Boolean($("#site-menu").attr("hidden"));
+}
+function showMenu()
+{
+    $("#menubutton").hide();
+    $("#site-menu").removeAttr("hidden");
+}
+function hideMenu()
+{
+    $("#menubutton").show();
+    $("#site-menu").attr("hidden", "");
+}
+
+function toggleMenu()
+{
+    if (menuIsHidden()) {
+        showMenu();
+    } else {
+        hideMenu();
+    }
+}
+
 function tooltip(text, css)
 {
     var eventType;
@@ -213,6 +243,10 @@ function tooltip(text, css)
     }
 
     switch (text) {
+        case "menubutton":
+            text = "Menu (M)";
+            css = "top: 65px; bottom: auto; left: 10px;";
+            break;
         case "loadnewvideo":
             text = "Click to get a new video (N)";
             css = "left";
@@ -240,6 +274,8 @@ function tooltip(text, css)
         $("#tooltip").attr("style", css + ": 10px;");
     } else if (css == "center") {
         $("#tooltip").attr("style", "right: 50%; transform: translateX(50%);");        
+    } else {
+        $("#tooltip").attr("style", css);
     }
     $("#tooltip").html(text);
     

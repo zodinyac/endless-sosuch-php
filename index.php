@@ -16,6 +16,18 @@
             <div id="timeprogress" class="progress"></div>
         </div>
     </div>
+    <span id="menubutton" class="quadbutton fa fa-bars" onclick="showMenu()"></span>
+    <div id="site-menu" hidden>
+        <span id="closemenubutton" onclick="hideMenu()" class="quadbutton fa fa-times"></span>
+        <p id="title">Endless sosuch</p>
+        <p id="source">Never stop watching WebM threads from 2ch.hk.</p>
+        <span id="song"></span>
+        <ul id="linkarea">
+            <li class="link"><a href="#" id="videolink">Link to this video</a></li>
+            <li class="link"><a href="https://github.com/zodinyac/endless-sosuch-php/blob/master/keyboard_bindings.md">Keyboard bindings</a></li>
+        </ul>
+        <p class="betanote">Source code: <a href="https://github.com/zodinyac/endless-sosuch-php">https://github.com/zodinyac/endless-sosuch-php</a>.<br />Idea: <a href="https://github.com/ValdikSS/endless-sosuch">https://github.com/ValdikSS/endless-sosuch</a>.<br />Design from <a href="openings.moe">openings.moe</a>.</p>
+    </div>
     <video id="video" width="100%" height="100%" autoplay <!--controls--> preload>
         <source type="video/webm" src="media/filler.webm" />
         Your web browser does not support WebM video.

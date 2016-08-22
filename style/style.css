@@ -16,6 +16,19 @@ video {
   margin: auto;
 }
 
+.link a {
+  display: block;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  color: #111;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.link a:hover {
+  color: #E54B00;
+}
+
 .displayTopRight {
   position: fixed;
   padding: 15px;
@@ -86,6 +99,59 @@ video {
 
 .fa-play {
   margin-right: 1.719px;
+}
+
+#menubutton {
+  position: fixed;
+  padding: 15px;
+  top: 10px;
+  left: 8px;
+}
+
+#closemenubutton {
+  color: black;
+  text-shadow: inherit;
+}
+
+#site-menu {
+  position: fixed;
+  top: 16px;
+  left: 10px;
+  width: 540px;
+  max-width: 80%;
+  max-height: 80vh;
+  font-size: 14pt;
+  color: #111;
+  background-color: white;
+  box-shadow: 0px 0px 15px rgba(0,0,0,0.8);
+  padding: 5px 15px 15px 10px;
+  overflow: auto;
+}
+
+#title, #source, #song, #subs {
+  color: #555;
+}
+
+#title {
+  font-size: 20pt;
+  display: inline;
+}
+
+#source, #song, #subs {
+  font-size: 14pt;
+}
+
+#linkarea {
+  margin-top: 7px;
+  margin-bottom: 7px;
+  padding-left: 10px;
+  margin-left: 5px;
+  border-left: solid 3px rgba(0, 0, 0, 0.2);
+  list-style: none;
+}
+
+.betanote {
+  opacity: 0.5;
 }
 
 .is-hidden {
