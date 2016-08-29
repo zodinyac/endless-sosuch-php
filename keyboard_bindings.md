@@ -4,6 +4,9 @@ You can use the following keybindings on the home page:
   - **[N]** New video
   - **[M]** Open/Close menu
   - **[F]** Toggle fullscreen
+  - **[B]** Bookmark video
+  - **[L]** List bookmarks to console
+  - **[C]** Clear bookmark list
   - **[Up arrow] / [Down arrow]** Change volume
   - **[Left arrow] / [Right arrow]** -/+ 5 seconds
 

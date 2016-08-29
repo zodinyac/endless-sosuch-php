@@ -1,4 +1,5 @@
 var videos = [];
+var videos_history = [];
 
 $( document ).ready(function() {
     $("#loadnewvideo").on("click", function() {
@@ -56,6 +57,15 @@ $( document ).ready(function() {
                 break;
             case 77: // M
                 toggleMenu();
+                break;
+            case 66: // B
+                bookmarkAdd();
+                break;
+            case 76: // L
+                bookmarkList();
+                break;
+            case 67: // C
+                bookmarkClear();
                 break;
             case 38: // Up
                 changeVolume(0.05);
@@ -161,6 +171,7 @@ function loadVideo()
 {
     if (videos.length > 0) {
         var url = videos.shift();
+        videos_history.push(url);
         console.log("Now (" + new Date().format("HH:MM:ss dd/mm/yyyy") + ") playing: " + url);
         
         $("#videolink").attr("href", url);
@@ -291,4 +302,58 @@ function tooltip(text, css)
     
     $("#tooltip").toggleClass("is-hidden", eventType && eventType === "mouseleave");
     $("#tooltip").toggleClass("is-visible", eventType && eventType === "mouseenter");
+}
+
+function bookmarkAdd(url)
+{
+    if (!url) {
+        url = videos_history[videos_history.length - 1];
+    }
+    if (bookmarkCheck(url)) {
+        return;
+    }
+    
+    var bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
+    var bookmark = {
+        date: new Date(),
+        url: url,
+    };
+    
+    if ($.isArray(bookmarks)) {
+        bookmarks.push(bookmark);
+    } else {
+        bookmarks = [bookmark];
+    }
+
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+}
+
+function bookmarkCheck(url)
+{
+    var bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
+    if ($.isArray(bookmarks)) {
+        return bookmarks.some(function(bookmark) {
+            return bookmark.url === url;
+        });
+    } else {
+        return false;
+    }
+}
+
+function bookmarkClear()
+{
+    localStorage.removeItem("bookmarks");
+}
+
+function bookmarkList()
+{
+    var bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
+    if ($.isArray(bookmarks)) {
+        console.log("Bookmarks list:");
+        $.each(bookmarks, function(index, bookmark) {
+            console.log(new Date(bookmark.date).format("HH:MM:ss dd/mm/yyyy") + ": " + bookmark.url);
+        });
+    } else {
+        console.log("There is no bookmarks.")
+    }
 }
