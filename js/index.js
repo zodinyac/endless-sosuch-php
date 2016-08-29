@@ -39,6 +39,10 @@ $( document ).ready(function() {
         loadVideo();
     });
     
+    $("#video > source").on("error", function(e) {
+        
+    });
+    
     $(this).keydown(function(e) {
         switch (e.which) {
             case 32: // Space
@@ -58,6 +62,12 @@ $( document ).ready(function() {
                 break;
             case 40: // Down
                 changeVolume(-0.05);
+                break;
+            case 37: // Left
+                $("#video")[0].currentTime -= 5; // seconds
+                break;
+            case 39: // Right
+                $("#video")[0].currentTime += 5; // seconds
                 break;
             default:
                 return;
@@ -135,7 +145,7 @@ function toggleFullscreen()
 
 function getVideoList()
 {
-    $.get( "get_video.php", function(data) {
+    $.get("get_video.php", function(data) {
         var answer = JSON.parse(data);
         if ($.isArray(answer) && answer.length > 0) {
             videos = answer;
