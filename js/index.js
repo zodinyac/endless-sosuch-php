@@ -6,6 +6,10 @@ $( document ).ready(function() {
         loadVideo();
     });
     
+    $("#previousvideo").on("click", function() {
+        previousVideo();
+    });
+    
     $("#fullscreen").on("click", function() {
         toggleFullscreen();
     });
@@ -51,6 +55,9 @@ $( document ).ready(function() {
                 break;
             case 78: // N
                 loadVideo();
+                break;
+            case 80: // P
+                previousVideo();
                 break;
             case 70: // F
                 toggleFullscreen();
@@ -186,6 +193,23 @@ function loadVideo()
     }
 }
 
+function previousVideo()
+{
+    if (videos_history.length > 1) {
+        videos.unshift(videos_history.pop());
+        var url = videos_history[videos_history.length - 1];
+        console.log("Now (" + new Date().format("HH:MM:ss dd/mm/yyyy") + ") playing: " + url);
+        
+        $("#videolink").attr("href", url);
+        
+        $("#video > source").attr("src", url);
+        $("#video")[0].load();
+        
+        $("#pause").removeClass("fa-play");
+        $("#pause").addClass("fa-pause");
+    }
+}
+
 function playPause()
 {
     var video = $("#video")[0];
@@ -270,6 +294,10 @@ function tooltip(text, css)
             break;
         case "loadnewvideo":
             text = "Click to get a new video (N)";
+            css = "left";
+            break;
+        case "previousvideo":
+            text = "Click to get a previous video (P)";
             css = "left";
             break;
         case "pause":

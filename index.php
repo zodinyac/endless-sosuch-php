@@ -36,6 +36,7 @@
     <div id="tooltip" class="is-hidden"></div>
     <div class="controlsleft">
         <span id="loadnewvideo" class="quadbutton fa fa-refresh"></span>
+        <span id="previousvideo" class="quadbutton fa fa-step-backward"></span>
     </div>
     <div class="controlscenter">
         <span id="pause" class="quadbutton fa fa-play"></span>

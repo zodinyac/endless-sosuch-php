@@ -2,6 +2,7 @@
 You can use the following keybindings on the home page:
   - **[Space]** Pause/Play
   - **[N]** New video
+  - **[P]** Previous video
   - **[M]** Open/Close menu
   - **[F]** Toggle fullscreen
   - **[B]** Bookmark video
