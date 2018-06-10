@@ -1,3 +1,5 @@
+var errors = 0;
+var tries = 0;
 var videos = [];
 var videos_history = [];
 
@@ -45,7 +47,14 @@ $( document ).ready(function() {
     });
     
     $("#video > source").on("error", function(e) {
-        
+        errors++;
+        if (errors == 3) {
+            errors = 0;
+            alert("error while loading video");
+        } else {
+            videos = [];
+            loadVideo();
+        }
     });
     
     $(this).keydown(function(e) {
@@ -162,16 +171,26 @@ function toggleFullscreen()
 
 function getVideoList()
 {
-    $.get("get_video.php", function(data) {
-        var answer = JSON.parse(data);
-        if ($.isArray(answer) && answer.length > 0) {
-            videos = answer;
-            loadVideo();
-        } else {
-            //alert(data);
-            getVideoList();
+    $.get("get_video.php",
+        {
+            "hash": window.location.hash.substr(1)
+        },
+        function(data) {
+            var answer = JSON.parse(data);
+            if ($.isArray(answer) && answer.length > 0) {
+                videos = answer;
+                loadVideo();
+            } else {
+                tries++;
+                if (tries == 5) {
+                    alert("error loading video list. please refresh page");
+                    return;
+                }
+                //alert(data);
+                getVideoList();
+            }
         }
-    });
+    );
 }
 
 function loadVideo()
